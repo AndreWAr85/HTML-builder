@@ -10,12 +10,6 @@ const templateFilePath = path.join(__dirname, 'template.html');
 const indexFilePath = path.join(distDir, 'index.html');
 const styleFilePath = path.join(distDir, 'style.css');
 
-async function readComponent(componentName) {
-  const filePath = path.join(componentsDir, `${componentName}.html`);
-  const content = await fsPromises.readFile(filePath, 'utf-8');
-  return content;
-}
-
 async function readTemplate() {
   const content = await fsPromises.readFile(templateFilePath, 'utf-8');
   return content;
@@ -26,10 +20,14 @@ async function writeIndexFile(content) {
   await fsPromises.writeFile(indexFilePath, content, 'utf-8');
 }
 async function copyAssetsDir() {
-  const srcDir = path.join(__dirname, '..', '06-build-page', 'assets');
+  const srcDir = assetsDir;
   const destDir = path.join(distDir, 'assets');
-  await fsPromises.rm(destDir, { recursive: true, force: true });
-  await copyDirectory(srcDir, destDir);
+  try {
+    await fsPromises.rm(destDir, { recursive: true, force: true });
+    await copyDirectory(srcDir, destDir);
+  } catch (error) {
+    console.error(`Failed to copy assets: ${error}`);
+  }
 }
 
 async function copyDirectory(src, dest) {
