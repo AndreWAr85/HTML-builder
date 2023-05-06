@@ -14,13 +14,17 @@ const rl = readline.createInterface({
 rl.on('line', input => {
   if (input === 'exit') {
     console.log('Hasta la vista!');
+    writeStream.end();
     process.exit(0);
+  } else {
+    writeStream.write(`${input}\n`);
+    console.log(`Вы ввели: ${input}`);
+    console.log('Введите текст:');
   }
-  writeStream.write(`${input}\n`);
-  console.log(`Вы ввели: ${input}`);
-  console.log('Введите текст:');
 });
 
-process.on('SIGINT', () => {
-  console.log('Received SIGINT. Hasta la vista!');
+rl.on('close', () => {
+  console.log('Hasta la vista!');
+  writeStream.end();
+  process.exit(0);
 });
