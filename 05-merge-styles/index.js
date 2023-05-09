@@ -4,7 +4,7 @@ const path = require('path');
 function marginStyle() {
   const stylesDir = path.join(__dirname, 'styles');
   const distDir = path.join(__dirname, 'project-dist');
-  const bundleFile = fs.createWriteStream(path.join(distDir, 'bundle.css'), { flags: 'a', encoding: 'utf-8' });
+  const bundleFile = fs.createWriteStream(path.join(distDir, 'bundle.css'), { flags: 'w', encoding: 'utf-8' });
   bundleFile.on('error', (err) => {
     throw err;
   });

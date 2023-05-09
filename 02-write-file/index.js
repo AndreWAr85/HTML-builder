@@ -1,8 +1,9 @@
 const fs = require('fs');
 const readline = require('readline');
 const process = require('node:process');
+const path = require('path');
 
-const writeStream = fs.createWriteStream('input.txt');
+const writeStream = fs.createWriteStream(path.join(__dirname, 'input.txt'));
 
 console.log('Введите текст:');
 
